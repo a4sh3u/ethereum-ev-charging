@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="./app.js"></script>
+</head>
+<body>
+  <h1>Ubitricity CryptoCharging</h1>
+  <h2>Blockchain Ethereum Dapp</h2>
+
+  <br>
+  <!-- <br><label for="secret">Secret:</label><input type="text" id="secret" placeholder="e.g., secret data"></input> -->
+  <div>
+      <input type="range" min="0" max="100" value="50" step="10" onchange="App.onValueChangeHandler(this.value)">
+  </div>
+  <div id="timeField"></div>
+  <div id="etherField"></div>
+  <br><br><button id="send" onclick="App.pay()">Pay</button>
+  <br><br>
+  <span id="status"></span>
+</body>
+</html>
