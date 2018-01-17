@@ -81,7 +81,7 @@ window.App = {
         self.postToSocket("OFF");
 
         console.log("Stopping socket");
-        return ds.SendPaymentToUbi(self.amount.price).then(function (){console.log("transferred from contract to ubi")}).catch(function(e){console.log(e);console.log("cannnot transfer from contract to ubi")})
+        return ds.SendPaymentToUbi({value: web3.toWei(self.amount.price, 'ether')}).then(function (){console.log("transferred from contract to ubi")}).catch(function(e){console.log(e);console.log("cannnot transfer from contract to ubi")})
       }, self.amount.time*1000);
 
       //self.refreshMapCount();
