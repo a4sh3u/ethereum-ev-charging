@@ -66,7 +66,7 @@ contract DataStore {
         return true;
     }
 
-    function SendPaymentToUbi() public payable returns(bool sufficient) {
+    function SendPaymentToUbi(uint value) public payable returns(bool sufficient) {
         /* Data memory newData;
         newData.Id = Id;
         newData.Name = Name;
@@ -83,7 +83,8 @@ contract DataStore {
         // ReceivingAccount.transfer(Price);
         //UbiAccount.transfer(msg.value);
         //Transfer(getCurrentAddress(), UbiAccount,  msg.value);
-        selfdestruct(UbiAccount);
+        //selfdestruct(UbiAccount);
+        UbiAccount.transfer(value);
         LogFundsSent(UbiAccount, msg.value);
 
         return true;
