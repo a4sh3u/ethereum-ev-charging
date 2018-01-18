@@ -1,4 +1,4 @@
-## Blockchain Ethereum DApp
+## Ethereum EV Charging
 
 ### Setup
 - install Node (developed with v8.9.2)
@@ -18,13 +18,13 @@
 - open browser at http://localhost:8080/
 - take a private key from the Ganache accounts and add it to Metamask to act as your own account.
 
-### Test 
+### Test (Not updated)
 - run tests with `truffle test`
 
 ### Use
 - fill in the form and click add. Considering that you already added your blockchain account to Metamask, it will popup a transaction window that will show a transfer of 10ETH. Approve the transfer and Ganache app will do the mining automatically.
 
-### Debug
+### Debug (Not updated)
 - to interact with blockchain and contracts run `truffle console`
     - grab the contract: `DataStore.deployed().then(function(instance) { d =instance })`
-    - run a transaction: `d.AddNewData("222", "Name2", "Secret2", {from: "0x821aEa9a577a9b44299B9c15c88cf3087F3b5544", to:"0x627306090abaB3A6e1400e9345bC60c78a8BEf57", value: web3.toWei(11, 'ether'), gasLimit: 21000, gasPrice: 20000000000})`
+    - run a transaction: `WIP`
