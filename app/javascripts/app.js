@@ -6,9 +6,9 @@ import { default as Web3} from 'web3';
 import { default as contract } from 'truffle-contract'
 
 // Import our contract artifacts and turn them into usable abstractions.
-import datastore_artifacts from '../../build/contracts/DataStore.json'
+import ubi_artifacts from '../../build/contracts/UbiContract.json'
 
-var DataStore = contract(datastore_artifacts);
+var UbiContract = contract(ubi_artifacts);
 
 
 var accounts;
@@ -22,8 +22,8 @@ window.App = {
   start: function() {
     var self = this;
 
-    // Bootstrap the DataStore abstraction for Use.
-    DataStore.setProvider(web3.currentProvider);
+    // Bootstrap the UbiContract abstraction for Use.
+    UbiContract.setProvider(web3.currentProvider);
 
     // Get the initial account balance so it can be displayed.
     web3.eth.getAccounts(function(err, accs) {
@@ -45,19 +45,6 @@ window.App = {
     });
   },
 
-  // buildContracts() {
-  //   let contracts = {};
-  //   let meta;
-
-  //   let {contract_name = ''} = datastore_artifacts;
-  //   meta = contract(datastore_artifacts);
-  //   meta.setProvider(web3.currentProvider);
-  //   meta.defaults({from: web3.eth.coinbase});
-  //   contracts[contract_name] = meta;
-
-  //   return contracts;
-  // },
-
   setStatus: function(message) {
     var status = document.getElementById("status");
     status.innerHTML = message;
@@ -68,20 +55,19 @@ window.App = {
 
     this.setStatus("Initiating transaction... (please wait)");
 
-    var ds;
-    DataStore.deployed().then(function(instance) {
-      ds = instance;
-      return ds.SendPaymentToContract({from: account, value: web3.toWei(self.amount.price, 'ether')})   // {from: account}  is needed to perform transactions !!!
+    var ubi;
+    UbiContract.deployed().then(function(instance) {
+      ubi = instance;
+      return ubi.SendPaymentToContract({from: account, value: web3.toWei(self.amount.price, 'ether')})   // {from: account}  is needed to perform transactions !!!
     }).then(function() {
       console.log("Transaction to contract complete!");
-      // curl -X POST -H "Content-Type: application/json" -d '{"charging": "ON"}' https://hookb.in/vaP3l3Rm
       self.postToSocket("ON");
 
       setTimeout(function(){
         self.postToSocket("OFF");
 
         console.log("Stopping socket");
-        return ds.SendPaymentToUbi({value: web3.toWei(self.amount.price, 'ether')}).then(function (){console.log("transferred from contract to ubi")}).catch(function(e){console.log(e);console.log("cannnot transfer from contract to ubi")})
+        return ubi.SendPaymentToUbi({value: web3.toWei(self.amount.price, 'ether')}).then(function (){console.log("transferred from contract to ubi")}).catch(function(e){console.log(e);console.log("cannnot transfer from contract to ubi")})
       }, self.amount.time*1000);
 
       //self.refreshMapCount();
