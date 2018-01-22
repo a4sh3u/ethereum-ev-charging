@@ -2,8 +2,12 @@
 import "../stylesheets/app.css";
 
 // Import libraries we need.
-import { default as Web3} from 'web3';
-import { default as contract } from 'truffle-contract'
+import {
+  default as Web3
+} from 'web3';
+import {
+  default as contract
+} from 'truffle-contract'
 
 // Import our contract artifacts and turn them into usable abstractions.
 import datastore_artifacts from '../../build/contracts/DataStore.json'
@@ -17,7 +21,7 @@ var account;
 window.App = {
   amount: {
     price: 0,
-    time:0
+    time: 0
   },
   start: function() {
     var self = this;
@@ -38,7 +42,7 @@ window.App = {
       }
       accounts = accs;
       account = accounts[0];
-      // web3.eth.defaultAccount = account;
+      web3.eth.defaultAccount = account;
       // self.buildContracts();
 
       //self.refreshMapCount();
@@ -71,18 +75,32 @@ window.App = {
     var ds;
     DataStore.deployed().then(function(instance) {
       ds = instance;
-      return ds.SendPaymentToContract({from: account, value: web3.toWei(self.amount.price, 'ether')})   // {from: account}  is needed to perform transactions !!!
+      ds.LogFundsSent().watch(function(error,result){console.log(error,result)});
+      return ds.SendPaymentToContract({
+        from: account,
+        value: web3.toWei(self.amount.price, 'ether')
+      }) // {from: account}  is needed to perform transactions !!!
     }).then(function() {
       console.log("Transaction to contract complete!");
       // curl -X POST -H "Content-Type: application/json" -d '{"charging": "ON"}' https://hookb.in/vaP3l3Rm
       self.postToSocket("ON");
 
-      setTimeout(function(){
+      setTimeout(function() {
         self.postToSocket("OFF");
 
         console.log("Stopping socket");
-        return ds.SendPaymentToUbi({value: web3.toWei(self.amount.price, 'ether')}).then(function (){console.log("transferred from contract to ubi")}).catch(function(e){console.log(e);console.log("cannnot transfer from contract to ubi")})
-      }, self.amount.time*1000);
+        console.log(ds);
+        console.log(ds.LogFundsSent());
+        console.log("0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef");
+        console.log(self.amount.price);
+        return ds.SendPaymentToUbi(0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef,self.amount.price).then(function(e) {
+          console.log(e);
+          console.log("transferred from contract to ubi")
+        }).catch(function(e) {
+          console.log(e);
+          console.log("cannnot transfer from contract to ubi")
+        })
+      }, self.amount.time * 1000);
 
       //self.refreshMapCount();
     }).catch(function(e) {
@@ -91,15 +109,15 @@ window.App = {
     });
   },
 
-   onValueChangeHandler: function(value){
-      console.log(value);
+  onValueChangeHandler: function(value) {
+    console.log(value);
 
-      this.amount.time = value;
-      this.amount.price = (0.3*parseInt(value));
+    this.amount.time = value;
+    this.amount.price = (0.3 * parseInt(value));
 
 
-      document.getElementById('timeField').innerText = this.amount.time + " seconds";
-      document.getElementById('etherField').innerText = this.amount.price + " ETH";
+    document.getElementById('timeField').innerText = this.amount.time + " seconds";
+    document.getElementById('etherField').innerText = this.amount.price + " ETH";
   },
 
   postToSocket: function(action) {
@@ -109,10 +127,10 @@ window.App = {
     //Send the proper header information along with the request
     xhr.setRequestHeader("Content-type", "application/json");
 
-    xhr.onreadystatechange = function() {//Call a function when the state changes.
-        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-            // Request finished. Do processing here.
-        }
+    xhr.onreadystatechange = function() { //Call a function when the state changes.
+      if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+        // Request finished. Do processing here.
+      }
     }
     xhr.send("{'charging': " + action + "}");
     // xhr.send('string');

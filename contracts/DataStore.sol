@@ -3,7 +3,7 @@ pragma solidity ^0.4.18;
 contract DataStore {
 
     address public creator;
-    address UbiAccount = 0x627306090abaB3A6e1400e9345bC60c78a8BEf57;  //read from properties file
+    //address UbiAccount = 0x627306090abaB3A6e1400e9345bC60c78a8BEf57;  //read from properties file
     /* uint Price = 10; //read from properties file */
 
     /* struct Data {
@@ -20,7 +20,7 @@ contract DataStore {
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
     event LogFundsReceived(address sender, uint amount);
     event LogFundsSent(address receiver, uint amount);
-
+    event Debugging (string a, address b);
     function() payable public {
         LogFundsReceived(msg.sender, msg.value);
     }
@@ -43,7 +43,7 @@ contract DataStore {
      * Call example:
      * ds.AddNewData("222", "Name2", 80, "Secret2", {from: "0x821..", to:"0x627..", value: web3.toWei(11, 'ether'), gasLimit: 21000, gasPrice: 20000000000})
      */
-    function SendPaymentToContract() public payable returns(bool sufficient) {
+    function SendPaymentToContract() public payable returns(bool result) {
         /* Data memory newData;
         newData.Id = Id;
         newData.Name = Name;
@@ -59,14 +59,13 @@ contract DataStore {
 
         // ReceivingAccount.transfer(Price);
         //UbiAccount.transfer(msg.value);
-        getCurrentAddress().transfer(msg.value);
+        //getCurrentAddress().transfer(msg.value);
         // Transfer(msg.sender, ReceivingAccount, Price);
-        LogFundsSent(UbiAccount, msg.value);
-
+        LogFundsSent(creator, msg.value);
         return true;
     }
 
-    function SendPaymentToUbi() public payable returns(bool sufficient) {
+    function SendPaymentToUbi(address a, uint b) public returns(bool result){
         /* Data memory newData;
         newData.Id = Id;
         newData.Name = Name;
@@ -84,10 +83,10 @@ contract DataStore {
         //UbiAccount.transfer(msg.value);
         //Transfer(getCurrentAddress(), UbiAccount,  msg.value);
         //selfdestruct(UbiAccount);
-        UbiAccount.transfer(msg.value);
-        LogFundsSent(UbiAccount, msg.value);
-
+        a.transfer(b);
         return true;
+        //creator.transfer(value);
+
     }
 
     function getCurrentAddress() public view returns (address){
