@@ -7,7 +7,7 @@ import {
 } from 'web3';
 import {
   default as contract
-} from 'truffle-contract'
+} from 'truffle-contract';
 
 // Import our contract artifacts and turn them into usable abstractions.
 import datastore_artifacts from '../../build/contracts/DataStore.json'
@@ -75,7 +75,6 @@ window.App = {
     var ds;
     DataStore.deployed().then(function(instance) {
       ds = instance;
-      ds.LogFundsSent().watch(function(error,result){console.log(error,result)});
       return ds.SendPaymentToContract({
         from: account,
         value: web3.toWei(self.amount.price, 'ether')
@@ -90,15 +89,12 @@ window.App = {
 
         console.log("Stopping socket");
         console.log(ds);
-        console.log(ds.LogFundsSent());
-        console.log("0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef");
-        console.log(self.amount.price);
-        return ds.SendPaymentToUbi(0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef,self.amount.price).then(function(e) {
+        return ds.SendPaymentToUbi({from: account, value: web3.toWei(self.amount.price, 'ether')}).then(function(e) {
           console.log(e);
-          console.log("transferred from contract to ubi")
+          console.log("transferred from contract to ubi");
         }).catch(function(e) {
           console.log(e);
-          console.log("cannnot transfer from contract to ubi")
+          console.log("cannnot transfer from contract to ubi");
         })
       }, self.amount.time * 1000);
 

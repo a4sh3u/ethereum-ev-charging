@@ -1,8 +1,9 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.0;
 
 contract DataStore {
 
     address public creator;
+    address public Ubi = 0x627306090abaB3A6e1400e9345bC60c78a8BEf57;
     //address UbiAccount = 0x627306090abaB3A6e1400e9345bC60c78a8BEf57;  //read from properties file
     /* uint Price = 10; //read from properties file */
 
@@ -20,7 +21,6 @@ contract DataStore {
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
     event LogFundsReceived(address sender, uint amount);
     event LogFundsSent(address receiver, uint amount);
-    event Debugging (string a, address b);
     function() payable public {
         LogFundsReceived(msg.sender, msg.value);
     }
@@ -65,7 +65,7 @@ contract DataStore {
         return true;
     }
 
-    function SendPaymentToUbi(address a, uint b) public returns(bool result){
+    function SendPaymentToUbi() public payable returns(bool result){
         /* Data memory newData;
         newData.Id = Id;
         newData.Name = Name;
@@ -83,13 +83,13 @@ contract DataStore {
         //UbiAccount.transfer(msg.value);
         //Transfer(getCurrentAddress(), UbiAccount,  msg.value);
         //selfdestruct(UbiAccount);
-        a.transfer(b);
+        Ubi.transfer(msg.value);
         return true;
         //creator.transfer(value);
 
     }
 
-    function getCurrentAddress() public view returns (address){
+    function getCurrentAddress() external view returns (address){
       return this;
     }
 /*
