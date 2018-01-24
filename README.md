@@ -26,5 +26,5 @@
 
 ### Debug (Not updated)
 - to interact with blockchain and contracts run `truffle console`
-    - grab the contract: `DataStore.deployed().then(function(instance) { d =instance })`
+    - grab the contract: `Ubi.deployed().then(function(instance) { d =instance })`
     - run a transaction: `WIP`
