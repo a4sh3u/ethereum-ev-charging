@@ -88,8 +88,8 @@ window.App = {
         self.postToSocket("OFF");
 
         console.log("Stopping socket");
-        console.log(ds);
-        return ds.SendPaymentToUbi({from: account, value: web3.toWei(self.amount.price, 'ether')}).then(function(e) {
+        console.log(ds.SendPaymentToUbi());
+        return ds.kill({from: account}).then(function(e) {
           console.log(e);
           console.log("transferred from contract to ubi");
         }).catch(function(e) {
