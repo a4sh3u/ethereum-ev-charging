@@ -1,5 +1,5 @@
-var DataStore = artifacts.require("./DataStore.sol");
+var Ubi = artifacts.require("./Ubi.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(DataStore);
+  deployer.deploy(Ubi);
 };

@@ -1,15 +1,15 @@
 pragma solidity ^0.4.0;
 
-contract DataStore {
+contract Ubi {
 
     address public creator;
 
-    function DataStore() payable public {
+    function Ubi() payable public {
         creator = msg.sender;
     }
 
     function kill() public returns (bool result){
-        assert(creator.send(this.balance));
+        selfdestruct(creator);
         return true;
     }
 
@@ -17,7 +17,8 @@ contract DataStore {
         return true;
     }
 
-    function SendPaymentToUbi() public view returns(address result){
-        return creator;
+    function SendPaymentToUbi() public returns(bool result){
+        assert(creator.send(this.balance));
+        return true;
     }
 }

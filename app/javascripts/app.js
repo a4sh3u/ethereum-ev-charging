@@ -10,9 +10,9 @@ import {
 } from 'truffle-contract';
 
 // Import our contract artifacts and turn them into usable abstractions.
-import datastore_artifacts from '../../build/contracts/DataStore.json'
+import ubi_artifacts from '../../build/contracts/Ubi.json'
 
-var DataStore = contract(datastore_artifacts);
+var Ubi = contract(ubi_artifacts);
 
 
 var accounts;
@@ -26,8 +26,8 @@ window.App = {
   start: function() {
     var self = this;
 
-    // Bootstrap the DataStore abstraction for Use.
-    DataStore.setProvider(web3.currentProvider);
+    // Bootstrap the Ubi abstraction for Use.
+    Ubi.setProvider(web3.currentProvider);
 
     // Get the initial account balance so it can be displayed.
     web3.eth.getAccounts(function(err, accs) {
@@ -53,8 +53,8 @@ window.App = {
   //   let contracts = {};
   //   let meta;
 
-  //   let {contract_name = ''} = datastore_artifacts;
-  //   meta = contract(datastore_artifacts);
+  //   let {contract_name = ''} = ubi_artifacts;
+  //   meta = contract(ubi_artifacts);
   //   meta.setProvider(web3.currentProvider);
   //   meta.defaults({from: web3.eth.coinbase});
   //   contracts[contract_name] = meta;
@@ -73,7 +73,7 @@ window.App = {
     this.setStatus("Initiating transaction... (please wait)");
 
     var ds;
-    DataStore.deployed().then(function(instance) {
+    Ubi.deployed().then(function(instance) {
       ds = instance;
       return ds.SendPaymentToContract({
         from: account,
@@ -88,8 +88,7 @@ window.App = {
         self.postToSocket("OFF");
 
         console.log("Stopping socket");
-        console.log(ds.SendPaymentToUbi());
-        return ds.kill({from: account}).then(function(e) {
+        return ds.SendPaymentToUbi({from: account}).then(function(e) {
           console.log(e);
           console.log("transferred from contract to ubi");
         }).catch(function(e) {
