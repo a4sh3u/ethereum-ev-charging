@@ -12,11 +12,15 @@
 
 ### Deploy and start app
 - take an account address from the blockchain accounts add add it to `DataStore#ReceivingAccount` to act as the business reciver account.
-- compile contracts: `truffle compile`
+- compile contracts: `truffle compile --all`
 - deploy to blockchain: `truffle migrate --reset`
 - start Frontend: `npm run dev`
 - open browser at http://localhost:8080/
 - take a private key from the Ganache accounts and add it to Metamask to act as your own account.
+
+### Charging Station simulation
+- Use the repo [Simple Light Bulb](https://github.com/a4sh3u/simple-bulb-switch) to run the light bulb application as simulated charging station.
+- The bulb will `switch on` during the charging period and `switch off` after charging period.
 
 ### Test (Not updated)
 - run tests with `truffle test`
