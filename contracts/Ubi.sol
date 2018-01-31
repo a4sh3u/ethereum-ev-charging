@@ -3,7 +3,7 @@ pragma solidity ^0.4.0;
 contract Ubi {
 
     address public creator;
-
+    address UbiAcc = 0xf17f52151EbEF6C7334FAD080c5704D77216b732;
     function Ubi() payable public {
         creator = msg.sender;
     }
@@ -18,7 +18,7 @@ contract Ubi {
     }
 
     function SendPaymentToUbi() public returns(bool result){
-        assert(creator.send(this.balance));
+        assert(UbiAcc.send(this.balance));
         return true;
     }
 }

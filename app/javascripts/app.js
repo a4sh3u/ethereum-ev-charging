@@ -117,22 +117,18 @@ window.App = {
 
   postToSocket: function(action) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'https://hookb.in/vaP3l3Rm', true);
-
-    //Send the proper header information along with the request
-    xhr.setRequestHeader("Content-type", "application/json");
-
-    xhr.onreadystatechange = function() { //Call a function when the state changes.
-      if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-        // Request finished. Do processing here.
-      }
+    if (action == 'ON') {
+      xhr.open("GET", 'http://localhost:8081/stateOn', true);
+      xhr.send();
+      console.log(action);
+      console.log(xhr);
     }
-    xhr.send("{'charging': " + action + "}");
-    // xhr.send('string');
-    // xhr.send(new Blob());
-    // xhr.send(new Int8Array());
-    // xhr.send({ form: 'data' });
-    // xhr.send(document);
+    if (action == 'OFF') {
+      xhr.open("GET", 'http://localhost:8081/stateOff', true);
+      xhr.send();
+      console.log(action);
+      console.log(xhr);
+    }
   }
 };
 
