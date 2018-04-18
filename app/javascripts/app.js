@@ -25,7 +25,7 @@ window.App = {
   },
   start: function() {
     var self = this;
-    Ubi.setProvider(new Web3.providers.HttpProvider("127.0.0.1:7545"));
+    Ubi.setProvider(new Web3.providers.HttpProvider("127.0.0.1:8545"));
   },
 
   setStatus: function(message) {
