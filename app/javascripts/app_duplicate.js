@@ -1,19 +1,16 @@
-// Import the page's CSS. Webpack will know what to do with it.
 import "../stylesheets/app.css";
-
-// Import libraries we need.
 import {
   default as Web3
 } from 'web3';
 import {
   default as contract
 } from 'truffle-contract';
-const EthereumTx = require('ethereumjs-tx')
-// Import our contract artifacts and turn them into usable abstractions.
+
+
 import ubi_artifacts from '../../build/contracts/Ubi.json'
 
 var Ubi = contract(ubi_artifacts);
-const Web3 = require('web3')
+
 
 var accounts;
 var account;
@@ -26,6 +23,9 @@ window.App = {
   start: function() {
     var self = this;
     Ubi.setProvider(new Web3.providers.HttpProvider("127.0.0.1:7545"));
+    web3.eth.defaultAccount = "0x01809A9D436Ff16736203c3689aEBe8487C09F01";
+    var private_key = "2572daa5583eca8bfc2435b9da417e729b9b1c0a5fd029793f6c141bc9ca1e00";
+    };
   },
 
   setStatus: function(message) {
@@ -36,8 +36,6 @@ window.App = {
   pay: function() {
     var self = this;
     this.setStatus("Initiating transaction... (please wait)");
-    web3.eth.defaultAccount = "0x01809A9D436Ff16736203c3689aEBe8487C09F01";
-    var private_key = "2572daa5583eca8bfc2435b9da417e729b9b1c0a5fd029793f6c141bc9ca1e00";
     var txn = {
       "to": "0xc720B0E54fd6Dd08b591946fc2452f1475FF405a",
       "value": web3.toWei(self.amount.price, 'ether')
